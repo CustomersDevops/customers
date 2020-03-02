@@ -1,4 +1,4 @@
-# customers
+# Customers
 This repository is responsible for the "Customers" Squad for the NYU DevOps and Agile Methodologies Spring 2020 class project.
 The Customers Squad is Basic customer into (name, address, etc.)
 
