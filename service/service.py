@@ -13,7 +13,7 @@ from flask_api import status  # HTTP Status Codes
 # For this example we'll use SQLAlchemy, a popular ORM that supports a
 # variety of backends including SQLite, MySQL, and PostgreSQL
 from flask_sqlalchemy import SQLAlchemy
-from service.models import YourResourceModel, DataValidationError
+from service.models import Customers, DataValidationError
 
 # Import Flask application
 from . import app
@@ -24,7 +24,7 @@ from . import app
 @app.route("/")
 def index():
     """ Root URL response """
-    return "Reminder: return some useful information in json format about the service here", status.HTTP_200_OK
+    return "V1 of the customers service file", status.HTTP_200_OK
 
 
 ######################################################################
@@ -34,4 +34,4 @@ def index():
 def init_db():
     """ Initialies the SQLAlchemy app """
     global app
-    YourResourceModel.init_db(app)
+    Customers.init_db(app)
