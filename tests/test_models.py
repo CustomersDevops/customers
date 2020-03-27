@@ -6,7 +6,7 @@ import logging
 import unittest
 import os
 from service import app
-from service.models import Customers, DataValidationError, db
+from service.models import Customer, DataValidationError, db
  
 DATABASE_URI = os.getenv(
     "DATABASE_URI", "postgres://postgres:postgres@localhost:5432/postgres"
@@ -15,7 +15,7 @@ DATABASE_URI = os.getenv(
 ######################################################################
 #  <your resource name>   M O D E L   T E S T   C A S E S
 ######################################################################
-class TestCustomers(unittest.TestCase):
+class TestCustomer(unittest.TestCase):
     """ Test Cases for <your resource name> Model """
 
     @classmethod
@@ -25,7 +25,7 @@ class TestCustomers(unittest.TestCase):
         app.config['DEBUG'] = False
         app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
         app.logger.setLevel(logging.CRITICAL)
-        Customers.init_db(app)
+        Customer.init_db(app)
 
 
     @classmethod
@@ -47,6 +47,40 @@ class TestCustomers(unittest.TestCase):
 #  P L A C E   T E S T   C A S E S   H E R E 
 ######################################################################
 
-    def test_XXXX(self):
-        """ Test something """
-        self.assertTrue(True)
+    def test_create_a_customer(self):
+        """ Create a customer and confirm that it exists """
+        customer = Customer( 
+            name="Alex Mical", 
+            user_name="ajmical", 
+            password="password",
+            
+            
+        )
+        self.assertTrue(customer != None)
+        self.assertEqual(customer.id, None)
+        self.assertEqual(customer.name, "Alex Mical")
+        self.assertEqual(customer.user_name, "ajmical")
+        self.assertEqual(customer.password, "password")
+        
+  
+
+
+
+
+    def test_add_a_customer(self):
+        """ Create a customer and add it to the database """ 
+        customers = Customer.all()
+        self.assertEqual(customers, [])
+        customer = Customer(
+            name="Alex Mical", 
+            user_name="ajmical", 
+            password="password",
+            
+        )
+        self.assertTrue(customer != None)
+        self.assertEqual(customer.id, None)
+        customer.create()
+        # Asert that it was assigned an id and shows up in the database
+        self.assertEqual(customer.id, 1)
+        customers = Customer.all()
+        self.assertEqual(len(customers), 1)

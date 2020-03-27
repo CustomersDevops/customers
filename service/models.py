@@ -16,7 +16,7 @@ class DataValidationError(Exception):
     pass
 
 
-class Customers(db.Model):
+class Customer(db.Model):
     """
     Class that represents a Customers
     """
@@ -30,7 +30,7 @@ class Customers(db.Model):
     password = db.Column(db.String(63))
 
     def __repr__(self):
-        return "Customers %r id=[%s]>" % (self.name, self.id)
+        return "Customer %r id=[%s]>" % (self.name, self.id)
 
     def create(self):
         """
@@ -58,9 +58,10 @@ class Customers(db.Model):
         """ Serializes a Customers into a dictionary """
         return {
             "id": self.id,
-            "user_name": self.name,
+            "name": self.name,
             "user_name": self.user_name,
             "password": self.password,
+            #"available": self.available
 
         }
 
