@@ -53,8 +53,6 @@ class TestCustomer(unittest.TestCase):
             name="Alex Mical", 
             user_name="ajmical", 
             password="password",
-            
-            
         )
         self.assertTrue(customer != None)
         self.assertEqual(customer.id, None)
@@ -62,8 +60,6 @@ class TestCustomer(unittest.TestCase):
         self.assertEqual(customer.user_name, "ajmical")
         self.assertEqual(customer.password, "password")
         
-  
-
 
 
 

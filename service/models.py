@@ -123,7 +123,7 @@ class Customer(db.Model):
         return cls.query.filter(cls.name == name)
 
     @classmethod
-    def find_by_user_name(cls, name):
+    def find_by_user_name(cls, user_name):
         """ Returns all Customers with the given user name
 
         Args:
