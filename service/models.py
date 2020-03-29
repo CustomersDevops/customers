@@ -1,5 +1,5 @@
 """
-Models for customers
+Models for Customers
 
 All of the models are stored in this module
 """
@@ -16,26 +16,25 @@ class DataValidationError(Exception):
     pass
 
 
-class customers(db.Model):
+class Customer(db.Model):
     """
-    Class that represents a customers
+    Class that represents a Customers
     """
 
     app = None
 
     # Table Schema
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(63))
-    address = db.Column(db.String(128))
-    email = db.Column(db.String(32))
-    phone_number = db.Column(db.String(12))
+    name = db.Column(db.String(24))
+    user_name = db.Column(db.String(24))
+    password = db.Column(db.String(63))
 
     def __repr__(self):
-        return "<customers %r id=[%s]>" % (self.name, self.id)
+        return "Customer %r id=[%s]>" % (self.name, self.id)
 
     def create(self):
         """
-        Creates a customers to the database
+        Creates a Customers to the database
         """
         logger.info("Creating %s", self.name)
         self.id = None  # id must be none to generate next primary key
@@ -44,44 +43,44 @@ class customers(db.Model):
 
     def save(self):
         """
-        Updates a customers to the database
+        Updates a Customers to the database
         """
         logger.info("Saving %s", self.name)
         db.session.commit()
 
     def delete(self):
-        """ Removes a customers from the data store """
+        """ Removes a Customers from the data store """
         logger.info("Deleting %s", self.name)
         db.session.delete(self)
         db.session.commit()
 
     def serialize(self):
-        """ Serializes a customers into a dictionary """
+        """ Serializes a Customers into a dictionary """
         return {
             "id": self.id,
             "name": self.name,
-            "address": self.address,
-            "email": self.email,
-            "phone_number":self.phone_number
+            "user_name": self.user_name,
+            "password": self.password,
+            #"available": self.available
+
         }
 
     def deserialize(self, data):
         """
-        Deserializes a customers from a dictionary
+        Deserializes a Customers from a dictionary
 
         Args:
             data (dict): A dictionary containing the resource data
         """
         try:
             self.name = data["name"]
-            self.address = data["address"]
-            self.email = data["email"]
-            self.phone_number = data["phone_number"]
+            self.user_name = data["user_name"]
+            self.password = data["password"]
         except KeyError as error:
-            raise DataValidationError("Invalid customers: missing " + error.args[0])
+            raise DataValidationError("Invalid Customers: missing " + error.args[0])
         except TypeError as error:
             raise DataValidationError(
-                "Invalid customers: body of request contained" "bad or no data"
+                "Invalid Customers: body of request contained" "bad or no data"
             )
         return self
 
@@ -97,28 +96,38 @@ class customers(db.Model):
 
     @classmethod
     def all(cls):
-        """ Returns all of the customers in the database """
-        logger.info("Processing all customers")
+        """ Returns all of the Customers in the database """
+        logger.info("Processing all Customers")
         return cls.query.all()
 
     @classmethod
     def find(cls, by_id):
-        """ Finds a customers by it's ID """
+        """ Finds a Customers by its ID """
         logger.info("Processing lookup for id %s ...", by_id)
         return cls.query.get(by_id)
 
     @classmethod
     def find_or_404(cls, by_id):
-        """ Find a customers by it's id """
+        """ Find a Customers by it's id """
         logger.info("Processing lookup or 404 for id %s ...", by_id)
         return cls.query.get_or_404(by_id)
 
     @classmethod
     def find_by_name(cls, name):
-        """ Returns all customers with the given name
+        """ Returns all Customers with the given name
 
         Args:
-            name (string): the name of the customers you want to match
+            name (string): the name of the Customers you want to match
         """
         logger.info("Processing name query for %s ...", name)
         return cls.query.filter(cls.name == name)
+
+    @classmethod
+    def find_by_user_name(cls, name):
+        """ Returns all Customers with the given user name
+
+        Args:
+            user_name (string): the name of the Customers you want to match
+        """
+        logger.info("Processing user name query for %s ...", user_name)
+        return cls.query.filter(cls.user_name == user_name)
