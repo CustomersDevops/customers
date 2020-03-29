@@ -1,5 +1,5 @@
 """
-Test cases for <your resource name> Model
+Test cases for customers Model
 
 """
 import logging
@@ -13,7 +13,7 @@ DATABASE_URI = os.getenv(
 )
 
 ######################################################################
-#  <your resource name>   M O D E L   T E S T   C A S E S
+#  customers   M O D E L   T E S T   C A S E S
 ######################################################################
 class TestCustomer(unittest.TestCase):
     """ Test Cases for <your resource name> Model """
