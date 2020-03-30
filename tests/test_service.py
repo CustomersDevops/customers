@@ -57,6 +57,24 @@ class TestYourResourceServer(TestCase):
         resp = self.app.get("/")
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
 
+
+    def _create_customer(self):
+        """ Get a list of Customers """
+        test_customer = {
+            "name": "Alex Mical",
+            "user_name": "ajmical",
+            "password": "password",
+        }
+    
+        resp = self.app.post(
+            "/customers", 
+            json=test_customer, 
+            content_type="application/json"
+        )
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+
+
+
     def test_create_customer(self):
         """ Create a new Customer """
         test_customer = {
@@ -89,3 +107,30 @@ class TestYourResourceServer(TestCase):
         #self.assertEqual(new_customer["name"], test_customer["name"], "Names do not match")
         #self.assertEqual(new_customer["user_name"], test_customer["user_name"], "User Names do not match")
         #self.assertEqual(new_customer["password"], test_customer["password"], "Passwords do not match")
+
+
+
+
+    def test_query_customer_list_by_user_name(self):
+        """ Query Customers by Category """
+        self._create_customer()
+        self._create_customer()
+        resp = self.app.get("/customers", query_string="user_name=ajmical")
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        data = resp.get_json()
+        self.assertEqual(len(data), 2)
+        # check the data just to be sure
+        for customer in data:
+            self.assertEqual(customer["user_name"],"ajmical")
+
+
+
+    def test_get_customer_list(self):
+        """ Get a list of Customers """
+        self._create_customer()
+        self._create_customer()
+        resp = self.app.get("/customers")
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        data = resp.get_json()
+        self.assertEqual(len(data), 2)
+

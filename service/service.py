@@ -26,6 +26,28 @@ def index():
     """ Root URL response """
     return "V1 of the customers service file", status.HTTP_200_OK
 
+
+######################################################################
+# LIST ALL CUSTOMERS
+######################################################################
+@app.route("/customers", methods=["GET"])
+def list_customers():
+    """ Returns all of the Customers """
+    app.logger.info("Request for customer list")
+    customers = []
+    user_name = request.args.get("user_name")
+    name = request.args.get("name")
+    if user_name:
+        customers = Customer.find_by_user_name(user_name)
+    elif name:
+        customers = Customer.find_by_name(name)
+    else:
+        customers = Customer.all()
+
+    results = [customer.serialize() for customer in customers]
+    return make_response(jsonify(results), status.HTTP_200_OK)
+
+
 ######################################################################
 # CREATE NEW CUSTOMER INFO
 ######################################################################
