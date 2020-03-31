@@ -16,7 +16,7 @@ class DataValidationError(Exception):
     pass
 
 
-class customers(db.Model):
+class Customer(db.Model):
     """
     Class that represents a customers
     """
@@ -44,19 +44,19 @@ class customers(db.Model):
 
     def save(self):
         """
-        Updates a customers to the database
+        Updates a customer to the database
         """
         logger.info("Saving %s", self.name)
         db.session.commit()
 
     def delete(self):
-        """ Removes a customers from the data store """
+        """ Removes a customer from the data store """
         logger.info("Deleting %s", self.name)
         db.session.delete(self)
         db.session.commit()
 
     def serialize(self):
-        """ Serializes a customers into a dictionary """
+        """ Serializes a customer into a dictionary """
         return {
             "id": self.id,
             "name": self.name,
@@ -67,7 +67,7 @@ class customers(db.Model):
 
     def deserialize(self, data):
         """
-        Deserializes a customers from a dictionary
+        Deserializes a customer from a dictionary
 
         Args:
             data (dict): A dictionary containing the resource data
@@ -97,28 +97,28 @@ class customers(db.Model):
 
     @classmethod
     def all(cls):
-        """ Returns all of the customers in the database """
+        """ Returns all of the customer in the database """
         logger.info("Processing all customers")
         return cls.query.all()
 
     @classmethod
     def find(cls, by_id):
-        """ Finds a customers by it's ID """
+        """ Finds a customer by it's ID """
         logger.info("Processing lookup for id %s ...", by_id)
         return cls.query.get(by_id)
 
     @classmethod
     def find_or_404(cls, by_id):
-        """ Find a customers by it's id """
+        """ Find a customer by it's id """
         logger.info("Processing lookup or 404 for id %s ...", by_id)
         return cls.query.get_or_404(by_id)
 
     @classmethod
     def find_by_name(cls, name):
-        """ Returns all customers with the given name
+        """ Returns all customer with the given name
 
         Args:
-            name (string): the name of the customers you want to match
+            name (string): the name of the customer you want to match
         """
         logger.info("Processing name query for %s ...", name)
         return cls.query.filter(cls.name == name)
