@@ -5,6 +5,7 @@ Test cases for customers Model
 import logging
 import unittest
 import os
+from service.models import Customer, DataValidationError, db
 from service import app
 from service.models import Customer, DataValidationError, db
  
@@ -15,8 +16,8 @@ DATABASE_URI = os.getenv(
 ######################################################################
 #  customers   M O D E L   T E S T   C A S E S
 ######################################################################
-class TestCustomer(unittest.TestCase):
-    """ Test Cases for <your resource name> Model """
+class testCustomer(unittest.TestCase):
+    """ Test Cases for customers Model """
 
     @classmethod
     def setUpClass(cls):
@@ -26,7 +27,6 @@ class TestCustomer(unittest.TestCase):
         app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
         app.logger.setLevel(logging.CRITICAL)
         Customer.init_db(app)
-
 
     @classmethod
     def tearDownClass(cls):
