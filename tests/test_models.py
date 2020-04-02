@@ -16,7 +16,7 @@ DATABASE_URI = os.getenv(
 ######################################################################
 #  customers   M O D E L   T E S T   C A S E S
 ######################################################################
-class testCustomer(unittest.TestCase):
+class TestCustomer(unittest.TestCase):
     """ Test Cases for customers Model """
 
     @classmethod
@@ -80,3 +80,30 @@ class testCustomer(unittest.TestCase):
         self.assertEqual(customer.id, 1)
         customers = Customer.all()
         self.assertEqual(len(customers), 1)
+
+
+    def test_update_a_customer(self):
+        """ Update a Pet """
+        customer = Customer(
+            name="Alex Mical", 
+            user_name="ajmical", 
+            password="password",
+            
+        )
+        customer.create()
+        logging.debug(customer)
+        self.assertEqual(customer.id, 1)
+        # Change it an save it
+        customer.password = "k9"
+        original_id = customer.id
+        customer.save()
+        self.assertEqual(customer.id, original_id)
+        self.assertEqual(customer.password, "k9")
+        # Fetch it back and make sure the id hasn't changed
+        # but the data did change
+        customers = Customer.all()
+        self.assertEqual(len(customers), 1)
+        self.assertEqual(customers[0].id, 1)
+        self.assertEqual(customers[0].password, "k9")
+
+
