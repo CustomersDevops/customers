@@ -89,6 +89,27 @@ def delete_customers(customer_id):
 
     
 ######################################################################
+# UPDATE A CUSTOMER
+######################################################################
+@app.route("/customers/<int:customer_id>", methods=["PUT"])
+def update_customers(customer_id):
+    """
+    Update a Customer
+    This endpoint will update a Customer based the body that is posted
+    """
+    app.logger.info("Request to update customer with id: %s", customer_id)
+    check_content_type("application/json")
+    customer = Customer.find(customer_id)
+    if not customer:
+        raise NotFound("Customer with id '{}' was not found.".format(customer_id))
+    customer.deserialize(request.get_json())
+    customer.id = customer_id
+    customer.save()
+    return make_response(jsonify(customer.serialize()), status.HTTP_200_OK)
+
+
+
+######################################################################
 #  U T I L I T Y   F U N C T I O N S
 ######################################################################
 
@@ -96,3 +117,11 @@ def init_db():
     """ Initialies the SQLAlchemy app """
     global app
     Customer.init_db(app)
+
+def check_content_type(content_type):
+    """ Checks that the media type is correct """
+    if request.headers["Content-Type"] == content_type:
+        return
+    app.logger.error("Invalid Content-Type: %s", request.headers["Content-Type"])
+    abort(415, "Content-Type must be {}".format(content_type))
+
