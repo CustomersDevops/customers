@@ -69,6 +69,25 @@ def create_customer():
         jsonify(message), status.HTTP_201_CREATED, {"Location": location_url}
     )
 
+
+
+######################################################################
+# DELETE A CUSTOMER
+######################################################################
+@app.route("/customers/<int:customer_id>", methods=["DELETE"])
+def delete_customers(customer_id):
+    """
+    Delete a Customer
+    This endpoint will delete a Customer based the id specified in the path
+    """
+    app.logger.info("Request to delete customer with id: %s", customer_id)
+    customer = Customer.find(customer_id)
+    if customer:
+        customer.delete()
+    return make_response("", status.HTTP_204_NO_CONTENT)
+
+
+    
 ######################################################################
 # UPDATE A CUSTOMER
 ######################################################################
