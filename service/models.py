@@ -28,6 +28,7 @@ class Customer(db.Model):
     name = db.Column(db.String(24))
     user_name = db.Column(db.String(24))
     password = db.Column(db.String(63))
+    locked = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return "Customer %r id=[%s]>" % (self.name, self.id)
@@ -61,8 +62,7 @@ class Customer(db.Model):
             "name": self.name,
             "user_name": self.user_name,
             "password": self.password,
-            #"available": self.available
-
+            "locked": self.locked
         }
 
     def deserialize(self, data):
@@ -76,6 +76,7 @@ class Customer(db.Model):
             self.name = data["name"]
             self.user_name = data["user_name"]
             self.password = data["password"]
+            self.locked = data.get("locked")
         except KeyError as error:
             raise DataValidationError("Invalid Customers: missing " + error.args[0])
         except TypeError as error:
