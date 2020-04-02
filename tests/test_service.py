@@ -175,6 +175,21 @@ class TestYourResourceServer(TestCase):
         self.assertEqual(updated_customer["password"], "unknown")
 
 
+    def test_lock_customer(self):
+        """ Lock an existing Customer """
+        # create a customer to lock
+        new_customer = self._create_customer()
+
+        # lock the customer
+        logging.debug(new_customer)
+        resp = self.app.put(
+            "/customers/{}/lock".format(new_customer["id"]),
+            content_type="application/json",
+        )
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        locked_customer = resp.get_json()
+        self.assertEqual(locked_customer["id"], new_customer["id"])
+        self.assertEqual(locked_customer["locked"], True)
 
 
 

@@ -107,7 +107,23 @@ def update_customers(customer_id):
     customer.save()
     return make_response(jsonify(customer.serialize()), status.HTTP_200_OK)
 
-
+######################################################################
+# ACTION - LOCK A CUSTOMER
+######################################################################
+@app.route("/customers/<int:customer_id>/lock", methods=["PUT"])
+def lock_customers(customer_id):
+    """
+    Lock A Customer
+    This endpoint will lock a Customer based the body that is posted
+    """
+    app.logger.info("Request to lock customer with id: %s", customer_id)
+    check_content_type("application/json")
+    customer = Customer.find(customer_id)
+    if not customer:
+        raise NotFound("Customer with id '{}' was not found.".format(customer_id))
+    customer.locked = True
+    customer.save()
+    return make_response(jsonify(customer.serialize()), status.HTTP_200_OK)
 
 ######################################################################
 #  U T I L I T Y   F U N C T I O N S
