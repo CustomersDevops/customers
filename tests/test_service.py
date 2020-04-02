@@ -73,6 +73,8 @@ class TestYourResourceServer(TestCase):
         )
         self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
 
+        new_customer = resp.get_json()
+        return new_customer
 
 
     def test_create_customer(self):
@@ -133,4 +135,30 @@ class TestYourResourceServer(TestCase):
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         data = resp.get_json()
         self.assertEqual(len(data), 2)
+
+
+
+    def test_update_customer(self):
+        """ Update an existing Customer """
+        # create a customer to update
+        new_customer = self._create_customer()
+
+        # update the customer
+        logging.debug(new_customer)
+        new_customer["password"] = "unknown"
+        resp = self.app.put(
+            "/customers/{}".format(new_customer["id"]),
+            json=new_customer,
+            content_type="application/json",
+        )
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        updated_customer = resp.get_json()
+        self.assertEqual(updated_customer["id"], new_customer["id"])
+        self.assertEqual(updated_customer["password"], "unknown")
+
+
+
+
+
+
 
