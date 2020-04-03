@@ -18,6 +18,10 @@ from service.models import Customer, DataValidationError
 # Import Flask application
 from . import app
 
+# Import Not Found
+from werkzeug.exceptions import NotFound
+
+
 ######################################################################
 # GET INDEX
 ######################################################################
@@ -123,6 +127,23 @@ def lock_customers(customer_id):
         raise NotFound("Customer with id '{}' was not found.".format(customer_id))
     customer.locked = True
     customer.save()
+    return make_response(jsonify(customer.serialize()), status.HTTP_200_OK)
+
+######################################################################
+# READ CUSTOMER
+######################################################################
+@app.route("/customers/<int:customer_id>", methods=["GET"])
+def get_customers(customer_id):
+    """
+    Retrieve a single customer
+    This endpoint will return a Customer based on it's id
+    """
+    app.logger.info("Request for customer with id: %s", customer_id)
+    customer = Customer.find(customer_id)
+    if not customer:
+        raise NotFound("Customer with id '{}' was not found.".format(customer_id))
+
+    app.logger.info("Returning customer: %s", customer.name)
     return make_response(jsonify(customer.serialize()), status.HTTP_200_OK)
 
 ######################################################################

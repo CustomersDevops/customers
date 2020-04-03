@@ -8,6 +8,8 @@ import os
 from service.models import Customer, DataValidationError, db
 from service import app
 from service.models import Customer, DataValidationError, db
+from werkzeug.exceptions import NotFound
+
  
 DATABASE_URI = os.getenv(
     "DATABASE_URI", "postgres://postgres:postgres@localhost:5432/postgres"
@@ -83,7 +85,7 @@ class TestCustomer(unittest.TestCase):
 
 
     def test_update_a_customer(self):
-        """ Update a Pet """
+        """ Update a Customer """
         customer = Customer(
             name="Alex Mical", 
             user_name="ajmical", 

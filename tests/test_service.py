@@ -12,6 +12,8 @@ from unittest.mock import MagicMock, patch
 from flask_api import status  # HTTP Status Codes
 from service.models import db
 from service.service import app, init_db
+from werkzeug.exceptions import NotFound
+
 
 
 # DATABASE_URI = os.getenv('DATABASE_URI', 'sqlite:///../db/test.db')
@@ -191,7 +193,21 @@ class TestYourResourceServer(TestCase):
         self.assertEqual(locked_customer["id"], new_customer["id"])
         self.assertEqual(locked_customer["locked"], True)
 
+    def test_get_customer(self):
+        """ Get a single Customer """
+        # get the id of a customer
+        test_customer = self._create_customer()
+        resp = self.app.get(
+            "/customers/{}".format(test_customer["id"]), content_type="application/json"
+        )
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        data = resp.get_json()
+        self.assertEqual(data["user_name"], test_customer["user_name"])
 
+    def test_get_customer_not_found(self):
+        """ Get a Customer thats not found """
+        resp = self.app.get("/customers/0")
+        self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
 
 
 
