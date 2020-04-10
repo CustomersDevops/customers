@@ -1,6 +1,6 @@
 # Travis-ci
 [![Build Status](https://travis-ci.org/CustomersDevops/customers.svg?branch=master)](https://travis-ci.org/CustomersDevops/customers) 
-
+[![codecov](https://codecov.io/gh/CustomersDevops/customers/branch/master/graph/badge.svg)](https://codecov.io/gh/CustomersDevops/customers)
 
 # Customers
 This repository is responsible for the "Customers" Squad for the NYU DevOps and Agile Methodologies Spring 2020 class project.
