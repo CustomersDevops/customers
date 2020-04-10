@@ -16,3 +16,7 @@ pylint>=2.4.1
 # Code coverage
 coverage==4.5.4
 codecov==2.0.15
+
+# Runtime Honcho
+honcho==1.0.1
+httpie==1.0.3
