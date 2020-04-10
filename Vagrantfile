@@ -61,11 +61,6 @@ Vagrant.configure(2) do |config|
     config.vm.provision "file", source: "~/.bluemix/apiKey.json", destination: "~/.bluemix/apiKey.json"
   end
 
- # Copy your IBM Cloud API Key if you have one
- if File.exists?(File.expand_path("~/.bluemix/apiKey.json"))
-  config.vm.provision "file", source: "~/.vimrc", destination: "~/.vimrc"
-  end
-
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
