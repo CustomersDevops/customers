@@ -1,7 +1,7 @@
 """
 My Service
 
-Describe what your service does here
+This is the service which creates, indexes, lists, updates, deletes, and locks a customer
 """
 
 import os
