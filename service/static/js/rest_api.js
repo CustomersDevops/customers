@@ -41,12 +41,13 @@ $(function () {
         var password = $("#password").val();
         //var available = $("#pet_available").val() == "true";
 
+        //create json file same way as postman
         var data = {
             "name": name,
             "user_name": user_name,
             "password": password
         };
-
+        //same as the tests in postman
         var ajax = $.ajax({
             type: "POST",
             url: "/customers",

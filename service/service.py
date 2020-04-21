@@ -28,7 +28,7 @@ from werkzeug.exceptions import NotFound
 @app.route("/")
 def index():
     """ Root URL response """
-    return "V1 of the customers service file", status.HTTP_200_OK
+    return app.send_static_file('index.html')
 
 
 ######################################################################
