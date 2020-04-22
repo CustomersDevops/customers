@@ -6,22 +6,22 @@ $(function () {
 
     // Updates the form with data from the response
     function update_form_data(res) {
-        $("#id").val(res._id);
+        $("#id").val(res.id);
         $("#name").val(res.name);
-        $("#user_name").val(res.name);
-        $("#password").val(res.category);
-        if (res.available == true) {
-            $("#pet_available").val("true");
+        $("#user_name").val(res.user_name);
+        $("#password").val(res.password);
+        if (res.locked == true) {
+            $("#customer_available").val("true");
         } else {
-            $("#pet_available").val("false");
+            $("#customer_available").val("false");
         }
     }
 
     /// Clears all form fields
     function clear_form_data() {
-        $("#pet_name").val("");
-        $("#pet_category").val("");
-        $("#pet_available").val("");
+        $("#name").val("");
+        $("#user_name").val("");
+        $("#password").val("");
     }
 
     // Updates the flash message area
@@ -39,13 +39,14 @@ $(function () {
         var name = $("#name").val();
         var user_name = $("#user_name").val();
         var password = $("#password").val();
-        //var available = $("#pet_available").val() == "true";
+        var locked = $("#customer_available").val() == "true";
 
         //create json file same way as postman
         var data = {
             "name": name,
             "user_name": user_name,
-            "password": password
+            "password": password, 
+            "locked": locked
         };
         //same as the tests in postman
         var ajax = $.ajax({
@@ -67,27 +68,29 @@ $(function () {
 
 
     // ****************************************
-    // Update a Pet
+    // Update a Customer & PUT
     // ****************************************
 
     $("#update-btn").click(function () {
 
-        var pet_id = $("#pet_id").val();
-        var name = $("#pet_name").val();
-        var category = $("#pet_category").val();
-        var available = $("#pet_available").val() == "true";
+        var customer_id = $("#customer_id").val();
+        var name = $("#name").val();
+        var user_name = $("#user_name").val();
+        var password = $("#password").val();
+        var locked = $("#customer_available").val() == "true";
 
         var data = {
             "name": name,
-            "category": category,
-            "available": available
+            "user_name": user_name,
+            "password": password,
+            "locked": locked
         };
 
         var ajax = $.ajax({
                 type: "PUT",
-                url: "/pets/" + pet_id,
+                url: "/customers/" + customer_id,
                 contentType: "application/json",
-                data: JSON.stringify(data)
+                data: JSON.stringify(data),
             })
 
         ajax.done(function(res){
@@ -102,16 +105,16 @@ $(function () {
     });
 
     // ****************************************
-    // Retrieve a Pet
+    // Retrieve a Customer
     // ****************************************
 
     $("#retrieve-btn").click(function () {
 
-        var pet_id = $("#pet_id").val();
+        var customer_id = $("#customer_id").val();
 
         var ajax = $.ajax({
             type: "GET",
-            url: "/pets/" + pet_id,
+            url: "/customers/" + customer_id,
             contentType: "application/json",
             data: ''
         })
@@ -130,23 +133,23 @@ $(function () {
     });
 
     // ****************************************
-    // Delete a Pet
+    // Delete a Customer
     // ****************************************
 
     $("#delete-btn").click(function () {
 
-        var pet_id = $("#pet_id").val();
+        var customer_id = $("#customer_id").val();
 
         var ajax = $.ajax({
             type: "DELETE",
-            url: "/pets/" + pet_id,
+            url: "/customers/" + customer_id,
             contentType: "application/json",
             data: '',
         })
 
         ajax.done(function(res){
             clear_form_data()
-            flash_message("Pet has been Deleted!")
+            flash_message("Customer has been Deleted!")
         });
 
         ajax.fail(function(res){
@@ -159,45 +162,38 @@ $(function () {
     // ****************************************
 
     $("#clear-btn").click(function () {
-        $("#pet_id").val("");
+        $("#customer_id").val("");
         clear_form_data()
     });
 
     // ****************************************
-    // Search for a Pet
+    // Search for a Customer
     // ****************************************
 
     $("#search-btn").click(function () {
 
-        var name = $("#pet_name").val();
-        var category = $("#pet_category").val();
-        var available = $("#pet_available").val() == "true";
+        var name = $("#name").val();
+        var user_name = $("#user_name").val();
+        var locked = $("#customer_available").val() == "true";
 
         var queryString = ""
 
         if (name) {
             queryString += 'name=' + name
         }
-        if (category) {
+        if (user_name) {
             if (queryString.length > 0) {
-                queryString += '&category=' + category
+                queryString += '&user_name=' + user_name
             } else {
-                queryString += 'category=' + category
-            }
-        }
-        if (available) {
-            if (queryString.length > 0) {
-                queryString += '&available=' + available
-            } else {
-                queryString += 'available=' + available
+                queryString += 'user_name=' + user_name
             }
         }
 
         var ajax = $.ajax({
             type: "GET",
-            url: "/pets?" + queryString,
+            url: "/customers?" + queryString,
             contentType: "application/json",
-            data: ''
+            data: '',
         })
 
         ajax.done(function(res){
@@ -207,24 +203,24 @@ $(function () {
             var header = '<tr>'
             header += '<th style="width:10%">ID</th>'
             header += '<th style="width:40%">Name</th>'
-            header += '<th style="width:40%">Category</th>'
-            header += '<th style="width:10%">Available</th></tr>'
+            header += '<th style="width:40%">User Name</th>'
+            header += '<th style="width:10%">Locked</th></tr>'
             $("#search_results").append(header);
-            var firstPet = "";
+            var firstCustomer = "";
             for(var i = 0; i < res.length; i++) {
-                var pet = res[i];
-                var row = "<tr><td>"+pet._id+"</td><td>"+pet.name+"</td><td>"+pet.category+"</td><td>"+pet.available+"</td></tr>";
+                var customer = res[i];
+                var row = "<tr><td>"+customer.id+"</td><td>"+customer.name+"</td><td>"+customer.user_name+"</td><td>"+customer.locked+"</td><td></tr>";
                 $("#search_results").append(row);
                 if (i == 0) {
-                    firstPet = pet;
+                    firstCustomer = customer;
                 }
             }
 
             $("#search_results").append('</table>');
 
             // copy the first result to the form
-            if (firstPet != "") {
-                update_form_data(firstPet)
+            if (firstCustomer != "") {
+                update_form_data(firstCustomer)
             }
 
             flash_message("Success")
