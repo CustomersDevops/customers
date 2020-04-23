@@ -11,9 +11,9 @@ $(function () {
         $("#user_name").val(res.user_name);
         $("#password").val(res.password);
         if (res.locked == true) {
-            $("#customer_available").val("true");
+            $("#locked").val("true");
         } else {
-            $("#customer_available").val("false");
+            $("#locked").val("false");
         }
     }
 
@@ -39,7 +39,7 @@ $(function () {
         var name = $("#name").val();
         var user_name = $("#user_name").val();
         var password = $("#password").val();
-        var locked = $("#customer_available").val() == "true";
+        var locked = $("#locked").val() == "true";
 
         //create json file same way as postman
         var data = {
@@ -73,11 +73,11 @@ $(function () {
 
     $("#update-btn").click(function () {
 
-        var customer_id = $("#customer_id").val();
+        var customer_id = $("#id").val();
         var name = $("#name").val();
         var user_name = $("#user_name").val();
         var password = $("#password").val();
-        var locked = $("#customer_available").val() == "true";
+        var locked = $("#locked").val() == "true";
 
         var data = {
             "name": name,
@@ -110,7 +110,7 @@ $(function () {
 
     $("#retrieve-btn").click(function () {
 
-        var customer_id = $("#customer_id").val();
+        var customer_id = $("#id").val();
 
         var ajax = $.ajax({
             type: "GET",
@@ -138,7 +138,7 @@ $(function () {
 
     $("#delete-btn").click(function () {
 
-        var customer_id = $("#customer_id").val();
+        var customer_id = $("#id").val();
 
         var ajax = $.ajax({
             type: "DELETE",
@@ -162,9 +162,63 @@ $(function () {
     // ****************************************
 
     $("#clear-btn").click(function () {
-        $("#customer_id").val("");
+        $("#id").val("");
         clear_form_data()
     });
+
+    // ****************************************
+    // Lock a Customer & PUT
+    // ****************************************
+
+    $("#lock-btn").click(function () {
+
+        var customer_id = $("#id").val();
+
+        var ajax = $.ajax({
+                type: "PUT",
+                url: "/customers/" + customer_id + "/lock",
+                contentType: "application/json",
+                data: "",
+            })
+
+        ajax.done(function(res){
+            update_form_data(res)
+            flash_message("Success")
+        });
+
+        ajax.fail(function(res){
+            flash_message(res.responseJSON.message)
+        });
+
+    });
+
+    // ****************************************
+    // Unlock a Customer & PUT
+    // ****************************************
+
+    $("#unlock-btn").click(function () {
+
+        var customer_id = $("#id").val();
+
+        var ajax = $.ajax({
+                type: "PUT",
+                url: "/customers/" + customer_id + "/unlock",
+                contentType: "application/json",
+                data: "",
+            })
+
+        ajax.done(function(res){
+            update_form_data(res)
+            flash_message("Success")
+        });
+
+        ajax.fail(function(res){
+            flash_message(res.responseJSON.message)
+        });
+
+    });
+
+
 
     // ****************************************
     // Search for a Customer
@@ -174,7 +228,7 @@ $(function () {
 
         var name = $("#name").val();
         var user_name = $("#user_name").val();
-        var locked = $("#customer_available").val() == "true";
+        var locked = $("#locked").val() == "true";
 
         var queryString = ""
 
