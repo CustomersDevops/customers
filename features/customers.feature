@@ -90,7 +90,7 @@ Scenario: Unlock a Customer(Action)
     And I set the "id" to "id1"
     And I press the "Retrieve" button
     Then I should see "true" in the locked dropdown
-    Then I press the "Unl   ock" button
+    Then I press the "Unlock" button
     And I press the "Clear" button
     And I set the "id" to "id1"
     And I press the "Retrieve" button
