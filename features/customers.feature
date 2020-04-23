@@ -75,18 +75,19 @@ Scenario: Read a Customer
     When I visit the "Home Page"
     And I set the "id" to "id1"
     And I press the "Retrieve" button
-    Then I should see "id1" in the results
-    And I should see "name1" in the results
-    And I should not see "uname1" in the results
-    And I should not see "pwd1" in the results
+    Then I should see "name1" in the "name" field
+    And I should see "uname1" in the "user_name" field
+    And I should see "pwd1" in the "password" field
 
 
 Scenario: Unlock a Customer(Action)
     When I visit the "Home Page"
     And I set the "id" to "id1"
     And I press the "Unlock" button
-    Then I should see the message "Customerhas been unlocked."
+    Then I should see the message "Customer has been unlocked."
     Then I should not see "false" in the results
+# FALSE - update syntax
+
 
 
 Scenario: Lock a Customer (Action)
@@ -95,6 +96,16 @@ Scenario: Lock a Customer (Action)
     And I press the "Lock" button
     Then I should see the message "Customer has locked."
     Then I should not see "true" in the results
+# When I enter the ID
+# And I hit retrieve
+# Then I should see false in the Locked dropdown
+# Then I press Lock
+# Then I clear
+# And Set the ID to id1
+# Then I hit retrieve
+# Then I should see True
+
+
 
 
 Scenario: List all customers
