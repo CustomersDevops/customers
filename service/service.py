@@ -130,6 +130,24 @@ def lock_customers(customer_id):
     return make_response(jsonify(customer.serialize()), status.HTTP_200_OK)
 
 ######################################################################
+# ACTION - UNLOCK A CUSTOMER
+######################################################################
+@app.route("/customers/<int:customer_id>/unlock", methods=["PUT"])
+def unlock_customers(customer_id):
+    """
+    Unlock A Customer
+    This endpoint will unlock a Customer based the body that is posted
+    """
+    app.logger.info("Request to unlock a customer with id: %s", customer_id)
+    check_content_type("application/json")
+    customer = Customer.find(customer_id)
+    if not customer:
+        raise NotFound("Customer with id '{}' was not found.".format(customer_id))
+    customer.locked = False
+    customer.save()
+    return make_response(jsonify(customer.serialize()), status.HTTP_200_OK)
+
+######################################################################
 # READ CUSTOMER
 ######################################################################
 @app.route("/customers/<int:customer_id>", methods=["GET"])
