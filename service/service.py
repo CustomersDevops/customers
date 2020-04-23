@@ -146,6 +146,17 @@ def get_customers(customer_id):
     app.logger.info("Returning customer: %s", customer.name)
     return make_response(jsonify(customer.serialize()), status.HTTP_200_OK)
 
+
+######################################################################
+# DELETE ALL CUSTOMER DATA (for testing only)
+######################################################################
+@app.route('/customers/reset', methods=['DELETE'])
+def customers_reset():
+    """ Removes all pets from the database """
+    Customer.remove_all()
+    return make_response('', status.HTTP_204_NO_CONTENT)
+
+
 ######################################################################
 #  U T I L I T Y   F U N C T I O N S
 ######################################################################

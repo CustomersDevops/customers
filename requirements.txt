@@ -23,3 +23,9 @@ httpie==1.0.3
 
 #Runtime Gunicorn (taken from bluemix)
 gunicorn==19.9.0
+
+# Behavior Driven Development
+behave==1.2.6
+selenium==3.141.0
+compare==0.2b0
+requests==2.22.0

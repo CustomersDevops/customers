@@ -61,13 +61,20 @@ Scenario: Update a Customer
 Scenario: Delete a Customer
     When I visit the "Home Page"
     And I set the "id" to "id1"
+    And I press the "Search" button
+    Then I should see "name1" in the "name" field
+    And I should see "uname1" in the "user_name" field
     And I press the "Delete" button
     Then I should see the message "Customer has been deleted."
+    And I set the "id" to "id1"
+    And I press the "Search" button
+    Then I should not see "name1" in the results
+    
 
 Scenario: Read a Customer
     When I visit the "Home Page"
     And I set the "id" to "id1"
-    And I press the "Read" button
+    And I press the "Retrieve" button
     Then I should see "id1" in the results
     And I should see "name1" in the results
     And I should not see "uname1" in the results

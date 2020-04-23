@@ -19,18 +19,22 @@ from selenium.webdriver.support import expected_conditions
 
 WAIT_SECONDS = int(getenv('WAIT_SECONDS', '60'))
 
-@given('the following pets')
+@given('the following customers')
 def step_impl(context):
     """ Delete all Pets and load new ones """
     headers = {'Content-Type': 'application/json'}
-    context.resp = requests.delete(context.base_url + '/pets/reset', headers=headers)
-    expect(context.resp.status_code).to_equal(204)
-    create_url = context.base_url + '/pets'
+    context.resp = requests.get(context.base_url + '/customers', headers=headers)
+
+    for customer in context.resp.json():
+        context.resp = requests.delete(context.base_url + '/customers/' + str(customer["id"]), headers=headers)
+        expect(context.resp.status_code).to_equal(204)
+    create_url = context.base_url + '/customers'
     for row in context.table:
         data = {
+            "id": row['id'],
             "name": row['name'],
-            "category": row['category'],
-            "available": row['available'] in ['True', 'true', '1']
+            "user_name": row['user_name'],
+            "password": row['password']
             }
         payload = json.dumps(data)
         context.resp = requests.post(create_url, data=payload, headers=headers)
