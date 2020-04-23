@@ -97,7 +97,6 @@ Scenario: Unlock a Customer(Action)
     And I should see "false" in the results
 
 
-
 Scenario: Lock a Customer (Action)
     When I visit the "Home Page"
     And I set the "id" to "id1"
@@ -108,7 +107,6 @@ Scenario: Lock a Customer (Action)
     And I set the "id" to "id1"
     And I press the "Retrieve" button
     And I should see "true" in the results
-
 
 
 Scenario: List all customers
