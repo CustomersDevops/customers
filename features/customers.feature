@@ -5,10 +5,10 @@ Feature: The pet store service back-end
 
 Background:
     Given the following customers
-        | id           | name   | user_name | password |
-        | id1          | name1  | uname1    | pwd1     |
-        | id2          | name2  | uname2    | pwd2     |
-        | id3          | name3  | uname3    | pwd3     |
+     | id    | name   | user_name | password |
+     | 1     | name1  | uname1    | pwd1     |
+     | 2     | name2  | uname2    | pwd2     |
+     | 3     | name3  | uname3    | pwd3     |
 
 Scenario: The server is running
     When I visit the "Home Page"
@@ -17,7 +17,6 @@ Scenario: The server is running
 
 Scenario: Create a Customer
     When I visit the "Home Page"
-    And I set the "id" to "alexmical"
     And I set the "name" to "Alex Mical"
     And I set the "user_name" to "ajmical"
     And I set the "password" to "password"
@@ -31,111 +30,152 @@ Scenario: Create a Customer
     And the "password" field should be empty
     When I paste the "id" field
     And I press the "Retrieve" button
-    Then I should see "alexmical" in the "id" field
-    And I should see "Alex Mical" in the "name" field
+    Then I should see "Alex Mical" in the "name" field
     And I should see "ajmical" in the "user_name" field
     And I should see "password" in the "password" field
 
 
 Scenario: Update a Customer
     When I visit the "Home Page"
-    And I set the "id" to "id1"
-    And I press the "Search" button
-    Then I should see "name1" in the "name" field
-    And I should see "uname1" in the "user_name" field
-    And I should see "pwd1" in the "password" field
-    When I change "name" to "changed_name"
+    And I set the "name" to "Alex Mical"
+    And I set the "user_name" to "ajmical"
+    And I set the "password" to "password"
+    And I press the "Create" button
+    Then I should see the message "Success"
+    When I copy the "id" field
+    And I press the "Clear" button
+    Then the "id" field should be empty
+    And the "name" field should be empty
+    And the "user_name" field should be empty
+    And the "password" field should be empty
+    When I paste the "id" field
+    And I set the "name" to "Marcella Leith"
+    And I set the "user_name" to "mcleith"
+    And I set the "password" to "password123"
     And I press the "Update" button
     Then I should see the message "Success"
     When I copy the "id" field
     And I press the "Clear" button
-    And I paste the "id" field
+    Then the "id" field should be empty
+    And the "name" field should be empty
+    And the "user_name" field should be empty
+    And the "password" field should be empty
+    When I paste the "id" field   
     And I press the "Retrieve" button
-    Then I should see "changed_name" in the "name" field
-    When I press the "Clear" button
-    And I press the "Search" button
-    Then I should see "changed_name" in the results
-    Then I should not see "name1" in the results
+    Then I should see "Marcella Leith" in the "name" field
+    And I should see "mcleith" in the "user_name" field
+    And I should see "password123" in the "password" field
 
 
 Scenario: Delete a Customer
     When I visit the "Home Page"
-    And I set the "id" to "id1"
+    And I set the "id" to "1"
     And I press the "Search" button
     Then I should see "name1" in the "name" field
     And I should see "uname1" in the "user_name" field
-    And I press the "Delete" button
-    Then I should see the message "Success."
-    And I set the "id" to "id1"
+    When I press the "Delete" button
+    Then I should see the message "Customer has been Deleted!"
+    When I set the "id" to "1"
     And I press the "Search" button
     Then I should not see "name1" in the results
     
 
 Scenario: Read a Customer
     When I visit the "Home Page"
-    And I set the "id" to "id1"
+    And I set the "name" to "Sue Smith"
+    And I set the "user_name" to "ssmith"
+    And I set the "password" to "password123"
+    And I press the "Create" button
+    Then I should see the message "Success"
+    When I copy the "id" field
+    And I press the "Clear" button
+    Then the "id" field should be empty
+    And the "name" field should be empty
+    And the "user_name" field should be empty
+    And the "password" field should be empty
+    When I paste the "id" field
     And I press the "Retrieve" button
-    Then I should see "name1" in the "name" field
-    And I should see "uname1" in the "user_name" field
-    And I should see "pwd1" in the "password" field
-    And I should not see "name2" in the "name" field
-    And I should not see "uname2" in the "user_name" field
-    And I should not see "pwd2" in the "password" field
-    And I should not see "name3" in the "name" field
-    And I should not see "uname3" in the "user_name" field
-    And I should not see "pwd3" in the "password" field
+    Then I should see "Sue Smith" in the "name" field
+    And I should see "ssmith" in the "user_name" field
+    And I should see "password123" in the "password" field
+
+
 
 Scenario: Unlock a Customer(Action)
     When I visit the "Home Page"
-    And I set the "id" to "id1"
-    And I press the "Retrieve" button
-    Then I should see "true" in the locked dropdown
-    Then I press the "Unlock" button
+    And I set the "name" to "Alex Mical"
+    And I set the "user_name" to "ajmical"
+    And I set the "password" to "password"
+    And I press the "Create" button
+    Then I should see the message "Success"
+    When I copy the "id" field
     And I press the "Clear" button
-    And I set the "id" to "id1"
+    Then the "id" field should be empty
+    And the "name" field should be empty
+    And the "user_name" field should be empty
+    And the "password" field should be empty
+    When I paste the "id" field
     And I press the "Retrieve" button
-    And I should see "false" in the results
+    Then I should see "True" in the "locked" dropdown
+    When I press the "Unlock" button
+    And I press the "Clear" button
+    And I paste the "id" field
+    And I press the "Retrieve" button
+    Then I should see "False" in the "locked" dropdown
 
 
 Scenario: Lock a Customer (Action)
     When I visit the "Home Page"
-    And I set the "id" to "id1"
-    And I press the "Retrieve" button
-    Then I should see "false" in the locked dropdown
-    Then I press the "Lock" button
+    And I set the "name" to "Alex Mical"
+    And I set the "user_name" to "ajmical"
+    And I set the "password" to "password"
+    And I press the "Create" button
+    Then I should see the message "Success"
+    When I copy the "id" field
     And I press the "Clear" button
-    And I set the "id" to "id1"
+    Then the "id" field should be empty
+    And the "name" field should be empty
+    And the "user_name" field should be empty
+    And the "password" field should be empty
+    When I paste the "id" field
     And I press the "Retrieve" button
-    And I should see "true" in the results
+    Then I should see "True" in the "locked" dropdown
+    When I press the "Unlock" button
+    And I press the "Clear" button
+    And I paste the "id" field
+    And I press the "Retrieve" button
+    Then I should see "False" in the "locked" dropdown
+    When I press the "Lock" button
+    And I press the "Clear" button
+    And I paste the "id" field
+    And I press the "Retrieve" button
+    Then I should see "True" in the "locked" dropdown
 
 
 Scenario: List all customers
     When I visit the "Home Page"
     And I press the "Search" button
-    Then I should see "id1" in the results
-    And I should see "id2" in the results
-    And I should not see "id3" in the results
-    And I should not see "name1" in the results
-    And I should not see "name2" in the results
-    And I should not see "name3" in the results
-    And I should not see "uname1" in the results
-    And I should not see "uname2" in the results
-    And I should not see "uname3" in the results
+    Then I should see "1" in the results
+    And I should see "2" in the results
+    And I should see "3" in the results
+    And I should see "name1" in the results
+    And I should see "name2" in the results
+    And I should see "name3" in the results
+    And I should see "uname1" in the results
+    And I should see "uname2" in the results
+    And I should see "uname3" in the results
 
 
 Scenario: List all customers with the name "name1" (Query)
     When I visit the "Home Page"
     And I set the "name" to "name1"
     And I press the "Search" button
-    Then I should see "id1" in the results
+    Then I should see "1" in the results
     And I should see "name1" in the results
     And I should see "uname1" in the results
-    And I should see "pwd1" in the results
-    And I should not see "id2" in the results
+    And I should not see "2" in the results
     And I should not see "name2" in the results
     And I should not see "uname2" in the results
-    And I should not see "pwd2" in the results
-    And I should not see "id3" in the results
+    And I should not see "3" in the results
     And I should not see "name3" in the results
     And I should not see "uname3" in the results
-    And I should not see "pwd3  " in the results
