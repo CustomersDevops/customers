@@ -3,21 +3,15 @@ Feature: The pet store service back-end
     I need a RESTful catalog service
     So that I can keep track of all my customers
 
-Background:
-    Given the following customers
-        | id           | name   | user_name | password |
-        | id1          | name1  | uname1    | pwd1     |
-        | id2          | name2  | uname2    | pwd2     |
-        | id3          | name3  | uname3    | pwd3     |
+
 
 Scenario: The server is running
     When I visit the "Home Page"
-    Then I should see "Customer Demo RESTful Service" in the title
+    Then I should see "Customers Demo RESTful Service" in the title
     And I should not see "404 Not Found"
 
 Scenario: Create a Customer
     When I visit the "Home Page"
-    And I set the "id" to "alexmical"
     And I set the "name" to "Alex Mical"
     And I set the "user_name" to "ajmical"
     And I set the "password" to "password"
