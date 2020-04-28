@@ -130,6 +130,24 @@ def lock_customers(customer_id):
     return make_response(jsonify(customer.serialize()), status.HTTP_200_OK)
 
 ######################################################################
+# ACTION - UNLOCK A CUSTOMER
+######################################################################
+@app.route("/customers/<int:customer_id>/unlock", methods=["PUT"])
+def unlock_customers(customer_id):
+    """
+    Unlock A Customer
+    This endpoint will unlock a Customer based the body that is posted
+    """
+    app.logger.info("Request to unlock a customer with id: %s", customer_id)
+    check_content_type("application/json")
+    customer = Customer.find(customer_id)
+    if not customer:
+        raise NotFound("Customer with id '{}' was not found.".format(customer_id))
+    customer.locked = False
+    customer.save()
+    return make_response(jsonify(customer.serialize()), status.HTTP_200_OK)
+
+######################################################################
 # READ CUSTOMER
 ######################################################################
 @app.route("/customers/<int:customer_id>", methods=["GET"])
@@ -145,6 +163,17 @@ def get_customers(customer_id):
 
     app.logger.info("Returning customer: %s", customer.name)
     return make_response(jsonify(customer.serialize()), status.HTTP_200_OK)
+
+
+######################################################################
+# DELETE ALL CUSTOMER DATA (for testing only)
+######################################################################
+@app.route('/customers/reset', methods=['DELETE'])
+def customers_reset():
+    """ Removes all pets from the database """
+    Customer.remove_all()
+    return make_response('', status.HTTP_204_NO_CONTENT)
+
 
 ######################################################################
 #  U T I L I T Y   F U N C T I O N S

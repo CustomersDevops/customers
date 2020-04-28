@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Customers Demo RESTful Service</title>
+    <title>Customer Demo RESTful Service</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,9 +27,9 @@
           <div class="well">
             <div class="form-horizontal">
               <div class="form-group">
-                <label class="control-label col-sm-2" for="customer_id">Customer ID:</label>
+                <label class="control-label col-sm-2" for="id">Customer ID:</label>
                 <div class="col-sm-6">
-                  <input type="text" class="form-control" id="customer_id" placeholder="Enter ID of Customer">
+                  <input type="text" class="form-control" id="id" placeholder="Enter ID of Customer">
                 </div>
                 <div class="col-sm-4">
                   <button type="submit" class="btn btn-primary" id="retrieve-btn">Retrieve</button>
@@ -62,9 +62,9 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="control-label col-sm-2" for="customer_available">Available:</label>
+                <label class="control-label col-sm-2" for="locked">Locked:</label>
                 <div class="col-sm-10">
-                  <select class="form-control" id="customer_available">
+                  <select class="form-control" id="locked">
                       <option value="true" selected>True</option>
                       <option value="false">False</option>
                   </select>
@@ -76,6 +76,10 @@
                   <button type="submit" class="btn btn-primary" id="clear-btn">Clear</button>
                   <button type="submit" class="btn btn-success" id="create-btn">Create</button>
                   <button type="submit" class="btn btn-warning" id="update-btn">Update</button>
+                  <button type="submit" class="btn btn-warning" id="lock-btn">Lock</button>
+                  <button type="submit" class="btn btn-warning" id="unlock-btn">Unlock</button>
+
+
                 </div>
               </div>
           </div> <!-- form div -->
@@ -89,7 +93,7 @@
                 <th class="col-md-1">ID</th>
                 <th class="col-md-4">Name</th>
                 <th class="col-md-4">Category</th>
-                <th class="col-md-3">Available</th>
+                <th class="col-md-3">Locked</th>
             </tr>
             </thead>
           </table>

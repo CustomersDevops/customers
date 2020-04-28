@@ -132,3 +132,5 @@ class Customer(db.Model):
         """
         logger.info("Processing user name query for %s ...", user_name)
         return cls.query.filter(cls.user_name == user_name)
+
+    
