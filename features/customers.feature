@@ -13,7 +13,7 @@ Background:
 
 Scenario: The server is running
     When I visit the "Home Page"
-    Then I should see "Customers Demo RESTful Service" in the title
+    Then I should see "Customer Demo RESTful Service" in the title
     And I should not see "404 Not Found"
 
 Scenario: Create a Customer
@@ -25,8 +25,7 @@ Scenario: Create a Customer
     Then I should see the message "Success"
     When I copy the "id" field
     And I press the "Clear" button
-    Then the "id" field should be empty
-    And the "name" field should be empty
+    Then the "name" field should be empty
     And the "user_name" field should be empty
     And the "password" field should be empty
     When I paste the "id" field
@@ -45,8 +44,7 @@ Scenario: Update a Customer
     Then I should see the message "Success"
     When I copy the "id" field
     And I press the "Clear" button
-    Then the "id" field should be empty
-    And the "name" field should be empty
+    Then the "name" field should be empty
     And the "user_name" field should be empty
     And the "password" field should be empty
     When I paste the "id" field
@@ -57,8 +55,7 @@ Scenario: Update a Customer
     Then I should see the message "Success"
     When I copy the "id" field
     And I press the "Clear" button
-    Then the "id" field should be empty
-    And the "name" field should be empty
+    Then the "name" field should be empty
     And the "user_name" field should be empty
     And the "password" field should be empty
     When I paste the "id" field   
@@ -90,8 +87,7 @@ Scenario: Read a Customer
     Then I should see the message "Success"
     When I copy the "id" field
     And I press the "Clear" button
-    Then the "id" field should be empty
-    And the "name" field should be empty
+    Then the "name" field should be empty
     And the "user_name" field should be empty
     And the "password" field should be empty
     When I paste the "id" field
@@ -111,8 +107,7 @@ Scenario: Unlock a Customer(Action)
     Then I should see the message "Success"
     When I copy the "id" field
     And I press the "Clear" button
-    Then the "id" field should be empty
-    And the "name" field should be empty
+    Then the "name" field should be empty
     And the "user_name" field should be empty
     And the "password" field should be empty
     When I paste the "id" field
@@ -134,8 +129,7 @@ Scenario: Lock a Customer (Action)
     Then I should see the message "Success"
     When I copy the "id" field
     And I press the "Clear" button
-    Then the "id" field should be empty
-    And the "name" field should be empty
+    Then the "name" field should be empty
     And the "user_name" field should be empty
     And the "password" field should be empty
     When I paste the "id" field
@@ -156,10 +150,7 @@ Scenario: Lock a Customer (Action)
 Scenario: List all customers
     When I visit the "Home Page"
     And I press the "Search" button
-    Then I should see "1" in the results
-    And I should see "2" in the results
-    And I should see "3" in the results
-    And I should see "name1" in the results
+    Then I should see "name1" in the results
     And I should see "name2" in the results
     And I should see "name3" in the results
     And I should see "uname1" in the results
@@ -171,12 +162,9 @@ Scenario: List all customers with the name "name1" (Query)
     When I visit the "Home Page"
     And I set the "name" to "name1"
     And I press the "Search" button
-    Then I should see "1" in the results
-    And I should see "name1" in the results
+    Then I should see "name1" in the results
     And I should see "uname1" in the results
-    And I should not see "2" in the results
     And I should not see "name2" in the results
     And I should not see "uname2" in the results
-    And I should not see "3" in the results
     And I should not see "name3" in the results
     And I should not see "uname3" in the results
