@@ -75,7 +75,7 @@ Scenario: Delete a Customer
     Then I should see the message "Customer has been Deleted!"
     When I set the "id" to "1"
     And I press the "Search" button
-    Then I should not see "name1" in the results
+    Then I should not see "name1" 
     
 
 Scenario: Read a Customer
