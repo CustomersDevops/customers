@@ -19,7 +19,7 @@ codecov==2.0.15
 
 # Runtime Honcho
 honcho==1.0.1
-httpie==1.0.3
+httpie==3.1.0
 
 #Runtime Gunicorn (taken from bluemix)
 gunicorn==19.9.0
